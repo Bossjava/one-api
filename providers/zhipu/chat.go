@@ -136,6 +136,13 @@ func convertFromChatOpenai(request *types.ChatCompletionRequest) *ZhipuRequest {
 				Function: tool.Function,
 			})
 		}
+	} else {
+		zhipuRequest.Tools = make([]ZhipuTool, 0, len(request.Tools))
+		for _, tool := range request.Tools {
+			zhipuRequest.Tools = append(zhipuRequest.Tools, ZhipuTool{
+				Type:     "web_search"
+			})
+		}
 	}
 
 	return zhipuRequest
